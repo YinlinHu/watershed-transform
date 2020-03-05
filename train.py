@@ -103,12 +103,12 @@ class Trainer():
 
 			if i == 0:
 				for j in range(image.shape[0]):
-					writer.add_image('input/train/%d'%i, viz_format(image[j:j+1]), global_step)
+					writer.add_image('input/train/%d'%i, viz_format(image[j:j+1]), global_step, dataformats='HW')
 			if args.watershed:
 				prediction_mask = torch.argmax(output, dim=1, keepdim=True).view(-1, 1, 256, 256)
 				for j in range(image.shape[0]):
-					writer.add_image('label/train/%d' % i, viz_format(label[j:j + 1]), global_step)
-					writer.add_image('prediction/train/%d'%i, viz_format(prediction_mask[j:j+1]), global_step)
+					writer.add_image('label/train/%d' % i, viz_format(label[j:j + 1]), global_step, dataformats='HW')
+					writer.add_image('prediction/train/%d'%i, viz_format(prediction_mask[j:j+1]), global_step, dataformats='HW')
 
 	def save_checkpoint(self, epoch):
 		args = self.args
@@ -145,13 +145,13 @@ class Trainer():
 			# images
 			if epoch == 0 and i == 0:
 				for j in range(image.shape[0]):
-					writer.add_image('input/val/%d' % j, viz_format(image[j:j + 1]), epoch)
+					writer.add_image('input/val/%d' % j, viz_format(image[j:j + 1]), epoch, dataformats='HW')
 
 			if args.watershed and i == 0:
 				prediction_mask = torch.argmax(output, dim=1, keepdim=True)
 				for j in range(image.shape[0]):
-					writer.add_image('label/val/%d' % j, viz_format(label[j:j + 1]), epoch)
-					writer.add_image('prediction/val/%d' % j, viz_format(prediction_mask[j:j + 1]), epoch)
+					writer.add_image('label/val/%d' % j, viz_format(label[j:j + 1]), epoch, dataformats='HW')
+					writer.add_image('prediction/val/%d' % j, viz_format(prediction_mask[j:j + 1]), epoch, dataformats='HW')
 			if args.debug: break
 
 		# scalars

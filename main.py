@@ -15,6 +15,10 @@ def _maybe_unpack_files(dataset_dir):
 
 if __name__ == '__main__':
 	args = cmd_args.Args()
+
+	# Set visible GPUs
+	os.environ['CUDA_VISIBLE_DEVICES'] = '1'
+
 	_maybe_unpack_files(args.dataset_dir)
 	trainer = Trainer(args)
 	trainer.train()
